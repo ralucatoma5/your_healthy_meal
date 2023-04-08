@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hackathon/const.dart';
 import 'package:hackathon/screens/recipe_detail_screen.dart';
@@ -27,9 +28,30 @@ class _HomeScreenState extends State<HomeScreen> {
           elevation: 0,
         ),
         drawer: Drawer(
-            child: ListView(
-          padding: EdgeInsets.zero,
-        )),
+          child: ListView(
+              // Important: Remove any padding from the ListView.
+              padding: EdgeInsets.zero,
+              children: [
+                DrawerHeader(
+                  decoration: BoxDecoration(
+                    color: blue,
+                  ),
+                  child: Column(
+                    children: [
+                      Text('Hello', style: TextStyle(color: Colors.white, fontSize: verticalBlock * 4)),
+                      Text(FirebaseAuth.instance.currentUser!.email.toString(),
+                          style: TextStyle(color: Colors.white, fontSize: verticalBlock * 2.5))
+                    ],
+                  ),
+                ),
+                ListTile(
+                  title: const Text('Sign out'),
+                  onTap: () {
+                    FirebaseAuth.instance.signOut();
+                  },
+                ),
+              ]),
+        ),
         body: Stack(children: [
           Positioned(child: Container(height: verticalBlock * 40, color: blue, width: double.infinity)),
           Column(

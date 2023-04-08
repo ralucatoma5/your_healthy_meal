@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:hackathon/const.dart';
+import 'package:hackathon/functions.dart';
 import 'package:hackathon/model/recipes_model.dart';
 import 'package:hackathon/screens/recipe_detail_screen.dart';
 
@@ -14,33 +15,6 @@ class RecipeCard extends StatelessWidget {
   bool favRecipe = false;
   final verticalBlock = SizeConfig.safeBlockVertical!;
   final horizontalBlock = SizeConfig.safeBlockHorizontal!;
-  Future addToFavRecipes(String recipeName) async {
-    CollectionReference collectionRef = FirebaseFirestore.instance.collection("favoriteRecipes");
-    DocumentReference documentRecepies = collectionRef.doc(FirebaseAuth.instance.currentUser!.email);
-    documentRecepies.get().then((docSnapshot) => {
-          if (docSnapshot.exists)
-            {
-              documentRecepies.update({
-                'favRecipes': FieldValue.arrayUnion([recipeName]),
-                'id': FirebaseAuth.instance.currentUser!.email
-              }),
-            }
-          else
-            {
-              documentRecepies.set({
-                'favRecipes': [recipeName],
-                'id': FirebaseAuth.instance.currentUser!.email
-              }),
-            }
-        });
-  }
-
-  Future removeFromFavRecipes(String recipeName) async {
-    CollectionReference collectionRef = FirebaseFirestore.instance.collection("favoriteRecipes");
-    collectionRef.doc(FirebaseAuth.instance.currentUser!.email).update({
-      'favRecipes': FieldValue.arrayRemove([recipeName]),
-    });
-  }
 
   @override
   Widget build(BuildContext context) {

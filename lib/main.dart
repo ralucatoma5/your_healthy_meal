@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hackathon/bottom_nav_bar.dart';
 import 'package:hackathon/const.dart';
+import 'package:hackathon/functions.dart';
 
 import 'package:hackathon/home_screen.dart';
 import 'package:hackathon/screens/auth_screen.dart';
@@ -14,6 +15,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   runApp(const MyApp());
 }
 
@@ -29,7 +31,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: colorCustom,
-        scaffoldBackgroundColor: Color.fromARGB(255, 243, 243, 243),
+        scaffoldBackgroundColor: const Color.fromARGB(255, 243, 243, 243),
       ),
       home: const MainPage(),
     );
@@ -49,6 +51,7 @@ class MainPage extends StatelessWidget {
           } else if (snapshot.hasError) {
             return const Center(child: Text('Something went wrong!'));
           } else if (snapshot.hasData) {
+            addStandardSettings();
             return const BottomNavBar();
           } else {
             return const AuthScreen();

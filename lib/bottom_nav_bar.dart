@@ -15,7 +15,7 @@ class BottomNavBar extends StatefulWidget {
 
 class _BottomNavBarState extends State<BottomNavBar> {
   int currentIndex = 0;
-  final screens = [HomeScreen(), /*FavRecipes()*/ AllRecipeScreen()];
+  final screens = [HomeScreen(), FavRecipes(), AllRecipeScreen()];
 
   @override
   Widget build(BuildContext context) {

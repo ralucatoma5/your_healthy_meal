@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hackathon/const.dart';
 import 'package:hackathon/screens/recipe_detail_screen.dart';
@@ -15,6 +16,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   var selectedIndex = 0;
+  List<bool> switchValueVitamins = [false, false, false, false];
+  List<String> vitamins = ['Vitamina D', 'Vitamina E', 'Vitamina C', 'Proteine'];
+  bool switchValueKcal = true;
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -27,12 +31,14 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: blue,
         elevation: 0,
       ),
-      /* drawer: Drawer(
-          child: ListView(padding: EdgeInsets.zero, children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: blue,
-              ),
+      drawer: Drawer(
+        child: ListView(padding: EdgeInsets.zero, children: [
+          DrawerHeader(
+            decoration: BoxDecoration(
+              color: blue,
+            ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: horizonalBlock * 7),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -46,15 +52,62 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            ListTile(
-              title: const Text('Sign out'),
-              onTap: () {
-                FirebaseAuth.instance.signOut();
-              },
+          ),
+          SizedBox(
+            height: verticalBlock * 2,
+          ),
+          ListTile(
+            dense: true,
+            visualDensity: VisualDensity(
+              horizontal: 0,
+              vertical: -4,
             ),
-          ]),
-        ),
-        body: Stack(children: [
+            leading: const Icon(Icons.logout_outlined),
+            title: Text('Sign out',
+                style: TextStyle(fontSize: verticalBlock * 2.5, fontWeight: FontWeight.w700)),
+            onTap: () {
+              FirebaseAuth.instance.signOut();
+            },
+          ),
+          ListView.builder(
+              physics: const ScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: switchValueVitamins.length,
+              itemBuilder: ((context, index) {
+                return ListTile(
+                    title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(vitamins[index], style: TextStyle(fontSize: verticalBlock * 2)),
+                    CupertinoSwitch(
+                      value: switchValueVitamins[index],
+                      onChanged: (value) {
+                        setState(() {
+                          switchValueVitamins[index] = value;
+                        });
+                      },
+                    ),
+                  ],
+                ));
+              })),
+          ListTile(
+              title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('kcal', style: TextStyle(fontSize: verticalBlock * 2)),
+              CupertinoSwitch(
+                value: switchValueKcal,
+                onChanged: (value) {
+                  setState(() {
+                    switchValueKcal = value;
+                  });
+                },
+              ),
+            ],
+          )),
+        ]),
+      ),
+      /*body: Stack(children: [
           Positioned(child: Container(height: verticalBlock * 40, color: blue, width: double.infinity)),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,

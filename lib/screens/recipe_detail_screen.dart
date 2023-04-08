@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:hackathon/const.dart';
+import 'package:hackathon/functions.dart';
 import 'package:hackathon/model/recipes_model.dart';
 
 class RecipeDetail extends StatefulWidget {
@@ -16,7 +18,7 @@ class _RecipeDetailState extends State<RecipeDetail> {
   final verticalBlock = SizeConfig.safeBlockVertical!;
 
   final horizontalBlock = SizeConfig.safeBlockHorizontal!;
-
+  late bool favRecipe;
   late Color mainColor;
   @override
   void initState() {
@@ -57,25 +59,51 @@ class _RecipeDetailState extends State<RecipeDetail> {
                           ),
                         ),
                         Positioned(
-                            top: verticalBlock * 20,
-                            child: CircleAvatar(
-                              radius: 23,
-                              backgroundColor: Colors.white,
-                              child: IconButton(
-                                color: Colors.black,
-                                iconSize: 23,
-                                icon: Icon(Icons.favorite_border),
-                                onPressed: () {},
-                              ),
-                            )),
+                          top: verticalBlock * 20,
+                          child: StreamBuilder<QuerySnapshot>(
+                            stream: FirebaseFirestore.instance.collection('favoriteRecipes').snapshots(),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
+                                if (snapshot.data!.docs[0]['favRecipes'].contains(widget.recipe.name)) {
+                                  favRecipe = true;
+                                  return CircleAvatar(
+                                      radius: 20,
+                                      backgroundColor: blue,
+                                      child: IconButton(
+                                        color: Colors.red,
+                                        iconSize: 20,
+                                        icon: Icon(Icons.favorite),
+                                        onPressed: () {
+                                          removeFromFavRecipes(widget.recipe.name);
+                                        },
+                                      ));
+                                }
+                              }
+                              return CircleAvatar(
+                                  radius: 20,
+                                  backgroundColor: blue,
+                                  child: IconButton(
+                                    color: Colors.white,
+                                    iconSize: 20,
+                                    icon: Icon(Icons.favorite_border),
+                                    onPressed: () {
+                                      addToFavRecipes(widget.recipe.name);
+                                    },
+                                  ));
+                            },
+                          ),
+                        )
                       ]),
                     ),
                   ),
                 ),
-                title: Text(
-                  widget.recipe.name,
-                  style: TextStyle(
-                      color: Colors.white, fontSize: verticalBlock * 3, fontWeight: FontWeight.w600),
+                title: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: horizontalBlock * 9),
+                  child: Text(
+                    widget.recipe.name,
+                    style: TextStyle(
+                        color: Colors.white, fontSize: verticalBlock * 2.5, fontWeight: FontWeight.w600),
+                  ),
                 ),
               ),
               centerTitle: false,
@@ -145,6 +173,17 @@ class _RecipeDetailState extends State<RecipeDetail> {
                                     child: horizonalLine,
                                   ),
                                   Text('Mod de preparare', style: subtitleStyle),
+                                  ListView.builder(
+                                      padding: EdgeInsets.only(top: verticalBlock * 3),
+                                      physics: const ScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemCount: widget.recipe.preparing.length,
+                                      itemBuilder: ((context, index) {
+                                        return Padding(
+                                          padding: EdgeInsets.only(bottom: verticalBlock),
+                                          child: Text(widget.recipe.preparing[index]),
+                                        );
+                                      })),
                                 ]),
                               ),
                             ))

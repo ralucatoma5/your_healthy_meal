@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:hackathon/const.dart';
-import 'package:hackathon/recipe_gridview.dart';
+import 'package:hackathon/widgets/recipe_gridview.dart';
 
 class AllRecipeScreen extends StatefulWidget {
   const AllRecipeScreen({super.key});

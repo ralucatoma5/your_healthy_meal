@@ -3,7 +3,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:hackathon/model/recipes_model.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:hackathon/recipe_card.dart';
+import 'package:hackathon/widgets/recipe_card.dart';
 
 class RecipeTypeGridView extends StatefulWidget {
   final type;

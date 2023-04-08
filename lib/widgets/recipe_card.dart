@@ -16,15 +16,28 @@ class RecipeCard extends StatelessWidget {
   final horizontalBlock = SizeConfig.safeBlockHorizontal!;
   Future addToFavRecipes(String recipeName) async {
     CollectionReference collectionRef = FirebaseFirestore.instance.collection("favoriteRecipes");
-    return collectionRef.doc(FirebaseAuth.instance.currentUser!.email).update({
-      'favRecipes': FieldValue.arrayUnion([recipeName]),
-      'id': FirebaseAuth.instance.currentUser!.email
-    });
+    DocumentReference documentRecepies = collectionRef.doc(FirebaseAuth.instance.currentUser!.email);
+    documentRecepies.get().then((docSnapshot) => {
+          if (docSnapshot.exists)
+            {
+              documentRecepies.update({
+                'favRecipes': FieldValue.arrayUnion([recipeName]),
+                'id': FirebaseAuth.instance.currentUser!.email
+              }),
+            }
+          else
+            {
+              documentRecepies.set({
+                'favRecipes': [recipeName],
+                'id': FirebaseAuth.instance.currentUser!.email
+              }),
+            }
+        });
   }
 
   Future removeFromFavRecipes(String recipeName) async {
     CollectionReference collectionRef = FirebaseFirestore.instance.collection("favoriteRecipes");
-    return collectionRef.doc(FirebaseAuth.instance.currentUser!.email).update({
+    collectionRef.doc(FirebaseAuth.instance.currentUser!.email).update({
       'favRecipes': FieldValue.arrayRemove([recipeName]),
     });
   }

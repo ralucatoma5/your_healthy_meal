@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -9,8 +11,24 @@ import 'package:hackathon/screens/recipe_detail_screen.dart';
 class RecipeCard extends StatelessWidget {
   Recipe recipe;
   RecipeCard({super.key, required this.recipe});
+  bool favRecipe = false;
   final verticalBlock = SizeConfig.safeBlockVertical!;
   final horizontalBlock = SizeConfig.safeBlockHorizontal!;
+  Future addToFavRecipes(String recipeName) async {
+    CollectionReference collectionRef = FirebaseFirestore.instance.collection("favoriteRecipes");
+    return collectionRef.doc(FirebaseAuth.instance.currentUser!.email).update({
+      'favRecipes': FieldValue.arrayUnion([recipeName]),
+      'id': FirebaseAuth.instance.currentUser!.email
+    });
+  }
+
+  Future removeFromFavRecipes(String recipeName) async {
+    CollectionReference collectionRef = FirebaseFirestore.instance.collection("favoriteRecipes");
+    return collectionRef.doc(FirebaseAuth.instance.currentUser!.email).update({
+      'favRecipes': FieldValue.arrayRemove([recipeName]),
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -51,16 +69,38 @@ class RecipeCard extends StatelessWidget {
                             : const Color(0xff40916c),
                     fontWeight: FontWeight.w800),
               ),
-              CircleAvatar(
-                radius: 20,
-                backgroundColor: blue,
-                child: IconButton(
-                  color: Colors.white,
-                  iconSize: 20,
-                  icon: Icon(Icons.favorite_border),
-                  onPressed: () {},
-                ),
-              )
+              StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance.collection('favoriteRecipes').snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
+                    if (snapshot.data!.docs[0]['favRecipes'].contains(recipe.name)) {
+                      favRecipe = true;
+                      return CircleAvatar(
+                          radius: 20,
+                          backgroundColor: blue,
+                          child: IconButton(
+                            color: Colors.red,
+                            iconSize: 20,
+                            icon: Icon(Icons.favorite),
+                            onPressed: () {
+                              removeFromFavRecipes(recipe.name);
+                            },
+                          ));
+                    }
+                  }
+                  return CircleAvatar(
+                      radius: 20,
+                      backgroundColor: blue,
+                      child: IconButton(
+                        color: Colors.white,
+                        iconSize: 20,
+                        icon: Icon(Icons.favorite_border),
+                        onPressed: () {
+                          addToFavRecipes(recipe.name);
+                        },
+                      ));
+                },
+              ),
             ],
           ),
         ),

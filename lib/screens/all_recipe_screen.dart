@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:hackathon/const.dart';
+import 'package:hackathon/model/recipes_model.dart';
 import 'package:hackathon/widgets/recipe_gridview.dart';
 
 class AllRecipeScreen extends StatefulWidget {

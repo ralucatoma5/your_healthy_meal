@@ -22,35 +22,37 @@ class _HomeScreenState extends State<HomeScreen> {
     final horizonalBlock = SizeConfig.safeBlockHorizontal!;
     final verticalBlock = SizeConfig.safeBlockVertical!;
     return Scaffold(
-        appBar: AppBar(
-          title: Text(''),
-          backgroundColor: blue,
-          elevation: 0,
-        ),
-        drawer: Drawer(
-          child: ListView(
-              // Important: Remove any padding from the ListView.
-              padding: EdgeInsets.zero,
-              children: [
-                DrawerHeader(
-                  decoration: BoxDecoration(
-                    color: blue,
+      appBar: AppBar(
+        title: Text(''),
+        backgroundColor: blue,
+        elevation: 0,
+      ),
+      /* drawer: Drawer(
+          child: ListView(padding: EdgeInsets.zero, children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: blue,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Image.asset(
+                    'assets/images/drawer.png',
+                    height: verticalBlock * 5,
                   ),
-                  child: Column(
-                    children: [
-                      Text('Hello', style: TextStyle(color: Colors.white, fontSize: verticalBlock * 4)),
-                      Text(FirebaseAuth.instance.currentUser!.email.toString(),
-                          style: TextStyle(color: Colors.white, fontSize: verticalBlock * 2.5))
-                    ],
-                  ),
-                ),
-                ListTile(
-                  title: const Text('Sign out'),
-                  onTap: () {
-                    FirebaseAuth.instance.signOut();
-                  },
-                ),
-              ]),
+                  Text('Hello', style: TextStyle(color: Colors.white, fontSize: verticalBlock * 4)),
+                  Text(FirebaseAuth.instance.currentUser!.email.toString(),
+                      style: TextStyle(color: Colors.white, fontSize: verticalBlock * 2.5))
+                ],
+              ),
+            ),
+            ListTile(
+              title: const Text('Sign out'),
+              onTap: () {
+                FirebaseAuth.instance.signOut();
+              },
+            ),
+          ]),
         ),
         body: Stack(children: [
           Positioned(child: Container(height: verticalBlock * 40, color: blue, width: double.infinity)),
@@ -118,6 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
               )
             ],
           ),
-        ]));
+        ])*/
+    );
   }
 }

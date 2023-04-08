@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:hackathon/all_recipe_screen.dart';
+import 'package:hackathon/screens/all_recipe_screen.dart';
 import 'package:hackathon/const.dart';
 import 'package:hackathon/home_screen.dart';
 

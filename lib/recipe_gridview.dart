@@ -45,7 +45,7 @@ class _RecipeTypeGridViewState extends State<RecipeTypeGridView> {
         return RecipeCard(recipe: recipe);
       },
       staggeredTileBuilder: (index) {
-        return StaggeredTile.count(1, index == 1 || index == 3 ? 1.40 : 1.30);
+        return StaggeredTile.count(1, index == 1 || index == 3 ? 1.50 : 1.40);
       },
     );
   }

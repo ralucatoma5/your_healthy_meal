@@ -38,7 +38,7 @@ class _RecipeDetailState extends State<RecipeDetail> {
               elevation: 0,
               expandedHeight: verticalBlock * 45,
               iconTheme: const IconThemeData(
-                color: Colors.black,
+                color: Colors.white,
               ),
               backgroundColor: mainColor,
               pinned: true,
@@ -101,7 +101,51 @@ class _RecipeDetailState extends State<RecipeDetail> {
                                     left: horizontalBlock * 8,
                                     right: horizontalBlock * 8,
                                     bottom: verticalBlock * 5),
-                                child: Text(widget.recipe.txt, style: TextStyle(fontSize: verticalBlock * 2)),
+                                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                  Text('Valori nutritionale', style: subtitleStyle),
+                                  ListView.builder(
+                                      padding: EdgeInsets.only(top: verticalBlock * 3),
+                                      physics: const ScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemCount: widget.recipe.type.length,
+                                      itemBuilder: ((context, index) {
+                                        return Row(
+                                          children: [
+                                            widget.recipe.type[index] != 'All'
+                                                ? Padding(
+                                                    padding: EdgeInsets.only(bottom: verticalBlock),
+                                                    child: Text(widget.recipe.type[index]),
+                                                  )
+                                                : SizedBox()
+                                          ],
+                                        );
+                                      })),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(vertical: verticalBlock * 5),
+                                    child: horizonalLine,
+                                  ),
+                                  Text('Ingrediente', style: subtitleStyle),
+                                  ListView.builder(
+                                      padding: EdgeInsets.only(top: verticalBlock * 3),
+                                      physics: const ScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemCount: widget.recipe.type.length,
+                                      itemBuilder: ((context, index) {
+                                        return Row(
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsets.only(bottom: verticalBlock),
+                                              child: Text(widget.recipe.type[index]),
+                                            )
+                                          ],
+                                        );
+                                      })),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(vertical: verticalBlock * 5),
+                                    child: horizonalLine,
+                                  ),
+                                  Text('Mod de preparare', style: subtitleStyle),
+                                ]),
                               ),
                             ))
                       ],

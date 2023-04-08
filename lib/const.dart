@@ -44,8 +44,17 @@ Map<int, Color> color = {
 MaterialColor colorCustom = MaterialColor(0xff000c36, color);
 
 BoxShadow containerShadow = BoxShadow(
-  color: Color.fromARGB(255, 156, 156, 156).withOpacity(0.5),
+  color: Color.fromARGB(255, 237, 237, 237).withOpacity(0.5),
   spreadRadius: 1,
   blurRadius: 3,
   offset: const Offset(0, 3),
 );
+
+Container horizonalLine = Container(
+  height: 1,
+  width: SizeConfig.safeBlockHorizontal! * 80,
+  color: blue,
+);
+
+TextStyle subtitleStyle =
+    TextStyle(fontSize: SizeConfig.safeBlockVertical! * 3.2, fontWeight: FontWeight.w600);

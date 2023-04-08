@@ -24,7 +24,7 @@ class RecipeCard extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(85),
           boxShadow: [containerShadow],
-          color: Color.fromARGB(255, 216, 216, 216),
+          color: Color.fromARGB(255, 238, 238, 238),
         ),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: horizontalBlock * 3),
@@ -36,10 +36,11 @@ class RecipeCard extends StatelessWidget {
                 tag: recipe.name,
                 child: Image.asset(
                   recipe.img,
-                  height: verticalBlock * 15,
+                  height: verticalBlock * 18,
                 ),
               ),
-              Text(recipe.name, style: TextStyle(color: Colors.white)),
+              Text(recipe.name,
+                  style: TextStyle(color: blue, fontSize: verticalBlock * 2.5, fontWeight: FontWeight.w700)),
               Text(
                 'dificultate: ${recipe.dificulty}',
                 style: TextStyle(

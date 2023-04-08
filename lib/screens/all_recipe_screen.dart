@@ -74,7 +74,8 @@ class _AllRecipeScreenState extends State<AllRecipeScreen> with SingleTickerProv
                         isScrollable: true,
                         unselectedLabelColor: Color.fromARGB(255, 175, 174, 174),
                         labelColor: blue,
-                        labelStyle: TextStyle(fontSize: verticalBlock * 2),
+                        labelStyle: TextStyle(fontSize: verticalBlock * 2.2, fontWeight: FontWeight.w700),
+                        unselectedLabelStyle: TextStyle(fontSize: verticalBlock * 2),
                         labelPadding: const EdgeInsets.only(right: 35),
                       ),
                     ),
@@ -82,7 +83,8 @@ class _AllRecipeScreenState extends State<AllRecipeScreen> with SingleTickerProv
                   title: Padding(
                     padding: EdgeInsets.only(top: verticalBlock * 2),
                     child: Text('Retete sanatoase',
-                        style: TextStyle(color: blue, fontSize: verticalBlock * 3.8)),
+                        style: TextStyle(
+                            color: blue, fontSize: verticalBlock * 3.8, fontWeight: FontWeight.w700)),
                   )),
             ];
           },

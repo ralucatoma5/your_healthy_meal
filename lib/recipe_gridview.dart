@@ -32,21 +32,24 @@ class _RecipeTypeGridViewState extends State<RecipeTypeGridView> {
 
   @override
   Widget build(BuildContext context) {
-    return StaggeredGridView.countBuilder(
-      shrinkWrap: true,
-      physics: const ScrollPhysics(),
-      padding: const EdgeInsets.all(10),
-      crossAxisCount: 2,
-      mainAxisSpacing: 30,
-      crossAxisSpacing: 30,
-      itemCount: widget.type != "All" ? trecipes.length : allrecipes.length,
-      itemBuilder: (context, index) {
-        final recipe = widget.type != "All" ? trecipes[index] : allrecipes[index];
-        return RecipeCard(recipe: recipe);
-      },
-      staggeredTileBuilder: (index) {
-        return StaggeredTile.count(1, index == 1 || index == 3 ? 1.70 : 1.60);
-      },
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: StaggeredGridView.countBuilder(
+        shrinkWrap: true,
+        physics: const ScrollPhysics(),
+        padding: const EdgeInsets.all(10),
+        crossAxisCount: 2,
+        mainAxisSpacing: 30,
+        crossAxisSpacing: 30,
+        itemCount: widget.type != "All" ? trecipes.length : allrecipes.length,
+        itemBuilder: (context, index) {
+          final recipe = widget.type != "All" ? trecipes[index] : allrecipes[index];
+          return RecipeCard(recipe: recipe);
+        },
+        staggeredTileBuilder: (index) {
+          return StaggeredTile.count(1, index == 1 || index == 3 ? 1.90 : 1.80);
+        },
+      ),
     );
   }
 }

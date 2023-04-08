@@ -40,114 +40,119 @@ class _SignInScreenState extends State<SignInScreen> {
 
     final horizontalBlock = SizeConfig.safeBlockHorizontal!;
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "SIGN IN",
-              style: TextStyle(color: blue, fontSize: verticalBlock * 5, fontWeight: FontWeight.bold),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Image.asset(
+            'assets/images/signin_top.png',
+            width: double.infinity,
+          ),
+          SizedBox(
+            height: verticalBlock,
+          ),
+          Text(
+            "SIGN IN",
+            style: TextStyle(color: blue, fontSize: verticalBlock * 5, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: verticalBlock * 7),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [containerShadow],
+              color: Colors.white,
             ),
-            SizedBox(height: verticalBlock * 7),
-            Container(
+            alignment: Alignment.center,
+            margin: EdgeInsets.symmetric(horizontal: horizontalBlock * 10),
+            child: TextField(
+              controller: emailController,
+              decoration: InputDecoration(
+                labelText: "Email",
+                border: InputBorder.none,
+                contentPadding:
+                    EdgeInsets.symmetric(vertical: verticalBlock * 2, horizontal: horizontalBlock * 5),
+              ),
+              style: TextStyle(fontSize: verticalBlock * 2),
+            ),
+          ),
+          Container(
+            alignment: Alignment.center,
+            margin: EdgeInsets.symmetric(horizontal: horizontalBlock * 10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [containerShadow],
+              color: Colors.white,
+            ),
+            child: TextField(
+              controller: passwordController,
+              decoration: InputDecoration(
+                labelText: "Password",
+                border: InputBorder.none,
+                contentPadding:
+                    EdgeInsets.symmetric(vertical: verticalBlock * 2, horizontal: horizontalBlock * 5),
+              ),
+              style: TextStyle(fontSize: verticalBlock * 2),
+              obscureText: true,
+            ),
+          ),
+          pass == false
+              ? Align(
+                  alignment: Alignment.bottomLeft,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: horizontalBlock * 10),
+                    child: Text('Incorrect username or password',
+                        style: TextStyle(color: Colors.red, fontSize: verticalBlock * 2)),
+                  ),
+                )
+              : const Text(''),
+          GestureDetector(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ForgotPasswordScreen()),
+            ),
+            child: Container(
+              alignment: Alignment.centerRight,
+              margin: EdgeInsets.only(
+                  left: horizontalBlock * 10,
+                  right: horizontalBlock * 10,
+                  bottom: verticalBlock * 2,
+                  top: verticalBlock * 2),
+              child: Text("Forgot your password?",
+                  style: TextStyle(
+                      color: blue, fontSize: verticalBlock * 2, decoration: TextDecoration.underline)),
+            ),
+          ),
+          SizedBox(height: verticalBlock * 0.3),
+          GestureDetector(
+            onTap: signIn,
+            child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                boxShadow: [containerShadow],
-                color: Colors.white,
+                color: blue,
               ),
-              alignment: Alignment.center,
+              padding: EdgeInsets.symmetric(horizontal: horizontalBlock * 12, vertical: verticalBlock * 2),
               margin: EdgeInsets.symmetric(horizontal: horizontalBlock * 10),
-              child: TextField(
-                controller: emailController,
-                decoration: InputDecoration(
-                  labelText: "Email",
-                  border: InputBorder.none,
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: verticalBlock * 2, horizontal: horizontalBlock * 5),
-                ),
-                style: TextStyle(fontSize: verticalBlock * 2),
-              ),
+              child: Text("Sign in",
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold, fontSize: verticalBlock * 2.3)),
             ),
-            SizedBox(
-              height: verticalBlock * 2.5,
-            ),
-            Container(
-              alignment: Alignment.center,
-              margin: EdgeInsets.symmetric(horizontal: horizontalBlock * 10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [containerShadow],
-                color: Colors.white,
-              ),
-              child: TextField(
-                controller: passwordController,
-                decoration: InputDecoration(
-                  labelText: "Password",
-                  border: InputBorder.none,
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: verticalBlock * 2, horizontal: horizontalBlock * 5),
-                ),
-                style: TextStyle(fontSize: verticalBlock * 2),
-                obscureText: true,
-              ),
-            ),
-            SizedBox(height: verticalBlock * 3),
-            pass == false
-                ? Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Padding(
-                      padding: EdgeInsets.only(left: horizontalBlock * 10),
-                      child: Text('Incorrect username or password',
-                          style: TextStyle(color: Colors.red, fontSize: verticalBlock * 2)),
-                    ),
-                  )
-                : const Text(''),
-            GestureDetector(
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ForgotPasswordScreen()),
-              ),
-              child: Container(
-                alignment: Alignment.centerRight,
-                margin: EdgeInsets.only(
-                    left: horizontalBlock * 10,
-                    right: horizontalBlock * 10,
-                    bottom: verticalBlock * 4,
-                    top: verticalBlock * 4),
-                child: Text("Forgot your password?",
+          ),
+          SizedBox(height: verticalBlock * 2),
+          RichText(
+              text: TextSpan(
+                  text: "Don't have an accout?  ",
+                  style: TextStyle(color: Colors.black, fontSize: verticalBlock * 1.8),
+                  children: [
+                TextSpan(
+                    recognizer: TapGestureRecognizer()..onTap = widget.onClickedSignUp,
+                    text: "Sign up",
                     style: TextStyle(
-                        color: blue, fontSize: verticalBlock * 2, decoration: TextDecoration.underline)),
-              ),
-            ),
-            SizedBox(height: verticalBlock * 0.3),
-            GestureDetector(
-              onTap: signIn,
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: blue,
-                ),
-                padding: EdgeInsets.symmetric(horizontal: horizontalBlock * 12, vertical: verticalBlock * 2),
-                margin: EdgeInsets.symmetric(horizontal: horizontalBlock * 10),
-                child: Text("Sign in",
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold, fontSize: verticalBlock * 2.3)),
-              ),
-            ),
-            SizedBox(height: verticalBlock * 3.5),
-            RichText(
-                text: TextSpan(
-                    text: "Don't have an accout?  ",
-                    style: TextStyle(color: Colors.black, fontSize: verticalBlock * 1.8),
-                    children: [
-                  TextSpan(
-                      recognizer: TapGestureRecognizer()..onTap = widget.onClickedSignUp,
-                      text: "Sign up",
-                      style: TextStyle(
-                          decoration: TextDecoration.underline, color: blue, fontSize: verticalBlock * 2))
-                ])),
-          ],
-        ),
+                        decoration: TextDecoration.underline, color: blue, fontSize: verticalBlock * 2))
+              ])),
+          Image.asset(
+            'assets/images/signin_bottom.png',
+            width: double.infinity,
+          ),
+        ],
       ),
     );
   }

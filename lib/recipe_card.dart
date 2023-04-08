@@ -10,6 +10,7 @@ class RecipeCard extends StatelessWidget {
   Recipe recipe;
   RecipeCard({super.key, required this.recipe});
   final verticalBlock = SizeConfig.safeBlockVertical!;
+  final horizontalBlock = SizeConfig.safeBlockHorizontal!;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -20,22 +21,47 @@ class RecipeCard extends StatelessWidget {
         );
       },
       child: Container(
-        color: recipe.dificulty == 'hard'
-            ? Colors.red
-            : recipe.dificulty == 'medium'
-                ? Colors.orange
-                : Colors.green,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Image.asset(
-              recipe.img,
-              height: verticalBlock * 15,
-            ),
-            Text(recipe.name, style: TextStyle(color: Colors.white)),
-            Icon(Icons.favorite_border, color: Colors.white),
-          ],
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(85),
+          boxShadow: [containerShadow],
+          color: Color.fromARGB(255, 216, 216, 216),
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: horizontalBlock * 3),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Hero(
+                tag: recipe.name,
+                child: Image.asset(
+                  recipe.img,
+                  height: verticalBlock * 15,
+                ),
+              ),
+              Text(recipe.name, style: TextStyle(color: Colors.white)),
+              Text(
+                'dificultate: ${recipe.dificulty}',
+                style: TextStyle(
+                    color: recipe.dificulty == 'greu'
+                        ? const Color(0xffdc6565)
+                        : recipe.dificulty == 'mediu'
+                            ? const Color(0xfff4a43c)
+                            : const Color(0xff40916c),
+                    fontWeight: FontWeight.w800),
+              ),
+              CircleAvatar(
+                radius: 20,
+                backgroundColor: blue,
+                child: IconButton(
+                  color: Colors.white,
+                  iconSize: 20,
+                  icon: Icon(Icons.favorite_border),
+                  onPressed: () {},
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -63,7 +63,7 @@ class _AllRecipeScreenState extends State<AllRecipeScreen> with SingleTickerProv
                   floating: true,
                   forceElevated: innerBoxIsScrolled,
                   bottom: PreferredSize(
-                    preferredSize: Size.fromHeight(verticalBlock * 12),
+                    preferredSize: Size.fromHeight(verticalBlock * 10),
                     child: Padding(
                       padding:
                           EdgeInsets.symmetric(horizontal: horizontalBlock * 5, vertical: verticalBlock * 1),
@@ -72,14 +72,18 @@ class _AllRecipeScreenState extends State<AllRecipeScreen> with SingleTickerProv
                         tabs: myTabs,
                         indicatorColor: Colors.transparent,
                         isScrollable: true,
-                        unselectedLabelColor: Colors.black87,
-                        labelColor: const Color(0xff1C7ED6),
+                        unselectedLabelColor: Color.fromARGB(255, 175, 174, 174),
+                        labelColor: blue,
+                        labelStyle: TextStyle(fontSize: verticalBlock * 2),
                         labelPadding: const EdgeInsets.only(right: 35),
                       ),
                     ),
                   ),
-                  title: Text('Retete sanatoase',
-                      style: TextStyle(color: Color(0xff000c36), fontSize: verticalBlock * 3.5))),
+                  title: Padding(
+                    padding: EdgeInsets.only(top: verticalBlock * 2),
+                    child: Text('Retete sanatoase',
+                        style: TextStyle(color: blue, fontSize: verticalBlock * 3.8)),
+                  )),
             ];
           },
           body: TabBarView(

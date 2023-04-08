@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hackathon/bottom_nav_bar.dart';
+import 'package:hackathon/const.dart';
 
 import 'package:hackathon/home_screen.dart';
 
@@ -22,7 +23,8 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: colorCustom,
+        scaffoldBackgroundColor: const Color(0xffFEFEFE),
       ),
       home: const MainPage(),
     );

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hackathon/const.dart';
+import 'package:hackathon/functions.dart';
 import 'package:hackathon/screens/recipe_detail_screen.dart';
 import 'package:hackathon/widgets/indicator.dart';
 import 'package:hackathon/model/recipes_model.dart';
@@ -82,6 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     CupertinoSwitch(
                       value: switchValueVitamins[index],
                       onChanged: (value) {
+                        updateSettings(vitamins[index], value);
                         setState(() {
                           switchValueVitamins[index] = value;
                         });
@@ -98,6 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
               CupertinoSwitch(
                 value: switchValueKcal,
                 onChanged: (value) {
+                  updateSettings('arataKcal', value);
                   setState(() {
                     switchValueKcal = value;
                   });

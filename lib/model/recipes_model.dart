@@ -6,16 +6,17 @@ class Recipe {
   List<String> preparing;
   String img;
   String dificulty;
+  int kcal;
 
   List<String> type;
 
-  Recipe({
-    required this.name,
-    required this.preparing,
-    required this.img,
-    required this.type,
-    required this.dificulty,
-  });
+  Recipe(
+      {required this.name,
+      required this.preparing,
+      required this.img,
+      required this.type,
+      required this.dificulty,
+      required this.kcal});
 
   factory Recipe.fromJSON(DocumentSnapshot doc) {
     return Recipe(
@@ -24,6 +25,7 @@ class Recipe {
       img: doc['img'],
       dificulty: doc['dificulty'],
       type: List<String>.from(doc['type']),
+      kcal: doc['kcal'],
     );
   }
 }

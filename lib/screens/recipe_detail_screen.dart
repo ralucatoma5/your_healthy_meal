@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -131,23 +132,42 @@ class _RecipeDetailState extends State<RecipeDetail> {
                                     bottom: verticalBlock * 5),
                                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                                   Text('Valori nutritionale', style: subtitleStyle),
-                                  ListView.builder(
-                                      padding: EdgeInsets.only(top: verticalBlock * 3),
-                                      physics: const ScrollPhysics(),
-                                      shrinkWrap: true,
-                                      itemCount: widget.recipe.type.length,
-                                      itemBuilder: ((context, index) {
-                                        return Row(
-                                          children: [
-                                            widget.recipe.type[index] != 'All'
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        height: verticalBlock * 3,
+                                      ),
+                                      StreamBuilder<QuerySnapshot>(
+                                          stream: FirebaseFirestore.instance
+                                              .collection('settings')
+                                              .where('id',
+                                                  isEqualTo: FirebaseAuth.instance.currentUser!.email)
+                                              .snapshots(),
+                                          builder: (context, snapshot) {
+                                            if (!snapshot.hasData) {
+                                              return const CircularProgressIndicator.adaptive();
+                                            } else {
+                                              return snapshot.data!.docs[0]['arataKcal'] == true
+                                                  ? Text('kcal: ${widget.recipe.kcal} ')
+                                                  : SizedBox();
+                                            }
+                                          }),
+                                      ListView.builder(
+                                          padding: EdgeInsets.only(top: verticalBlock * 3),
+                                          physics: const ScrollPhysics(),
+                                          shrinkWrap: true,
+                                          itemCount: widget.recipe.type.length,
+                                          itemBuilder: ((context, index) {
+                                            return widget.recipe.type[index] != 'All'
                                                 ? Padding(
                                                     padding: EdgeInsets.only(bottom: verticalBlock),
                                                     child: Text(widget.recipe.type[index]),
                                                   )
-                                                : SizedBox()
-                                          ],
-                                        );
-                                      })),
+                                                : SizedBox();
+                                          })),
+                                    ],
+                                  ),
                                   Padding(
                                     padding: EdgeInsets.symmetric(vertical: verticalBlock * 5),
                                     child: horizonalLine,

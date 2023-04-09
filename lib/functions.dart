@@ -41,3 +41,8 @@ Future addStandardSettings() async {
     'id': FirebaseAuth.instance.currentUser!.email
   });
 }
+
+Future updateSettings(String settingName, bool value) async {
+  final collectionRef = FirebaseFirestore.instance.collection('settings');
+  return collectionRef.doc(FirebaseAuth.instance.currentUser!.email).update({settingName: value});
+}

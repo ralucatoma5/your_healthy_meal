@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:hackathon/const.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:hackathon/functions.dart';
 import 'package:hackathon/main.dart';
 import 'package:hackathon/screens/forgotpassword_screen.dart';
 
@@ -158,6 +159,7 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   Future signIn() async {
+    addStandardSettings();
     showDialog(
       context: context,
       barrierDismissible: false,

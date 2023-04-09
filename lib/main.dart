@@ -51,7 +51,6 @@ class MainPage extends StatelessWidget {
           } else if (snapshot.hasError) {
             return const Center(child: Text('Something went wrong!'));
           } else if (snapshot.hasData) {
-            addStandardSettings();
             return const BottomNavBar();
           } else {
             return const AuthScreen();

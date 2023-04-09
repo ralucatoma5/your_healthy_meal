@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 Future addToFavRecipes(String recipeName) async {
   CollectionReference collectionRef = FirebaseFirestore.instance.collection("favoriteRecipes");
@@ -45,4 +49,41 @@ Future addStandardSettings() async {
 Future updateSettings(String settingName, bool value) async {
   final collectionRef = FirebaseFirestore.instance.collection('settings');
   return collectionRef.doc(FirebaseAuth.instance.currentUser!.email).update({settingName: value});
+}
+
+Future<void> removeFavAlert(BuildContext context, String recipeName) async {
+  Platform.isAndroid
+      ? showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: const Text("Esti sigur ca vrei sa stergi reteta din favorite?"),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text("Nu"),
+                  ),
+                  TextButton(
+                    onPressed: () => removeFromFavRecipes(recipeName),
+                    child: const Text("Da"),
+                  ),
+                ],
+              ))
+      : showCupertinoDialog(
+          context: context,
+          builder: (context) => CupertinoAlertDialog(
+                title: const Text("Esti sigur ca vrei sa stergi reteta din favorite?"),
+                actions: [
+                  CupertinoDialogAction(
+                    child: const Text("Nu"),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                  CupertinoDialogAction(
+                    child: const Text("Da"),
+                    onPressed: () {
+                      removeFromFavRecipes(recipeName);
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              ));
 }

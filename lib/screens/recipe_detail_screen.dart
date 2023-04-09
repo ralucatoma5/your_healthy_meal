@@ -68,11 +68,11 @@ class _RecipeDetailState extends State<RecipeDetail> {
                                 if (snapshot.data!.docs[0]['favRecipes'].contains(widget.recipe.name)) {
                                   favRecipe = true;
                                   return CircleAvatar(
-                                      radius: 20,
-                                      backgroundColor: blue,
+                                      radius: 22,
+                                      backgroundColor: Colors.white,
                                       child: IconButton(
                                         color: Colors.red,
-                                        iconSize: 20,
+                                        iconSize: 22,
                                         icon: Icon(Icons.favorite),
                                         onPressed: () {
                                           removeFromFavRecipes(widget.recipe.name);
@@ -82,9 +82,9 @@ class _RecipeDetailState extends State<RecipeDetail> {
                               }
                               return CircleAvatar(
                                   radius: 20,
-                                  backgroundColor: blue,
+                                  backgroundColor: Colors.white,
                                   child: IconButton(
-                                    color: Colors.white,
+                                    color: blue,
                                     iconSize: 20,
                                     icon: Icon(Icons.favorite_border),
                                     onPressed: () {

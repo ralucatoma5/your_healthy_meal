@@ -85,7 +85,7 @@ class FavRecipes extends StatelessWidget {
                                                           iconSize: 20,
                                                           icon: Icon(Icons.favorite),
                                                           onPressed: () {
-                                                            removeFromFavRecipes(recipe.name);
+                                                            removeFavAlert(context, recipe.name);
                                                           },
                                                         ));
                                                   }

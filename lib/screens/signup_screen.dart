@@ -2,6 +2,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:hackathon/functions.dart';
 import '../const.dart';
 import '../main.dart';
 
@@ -173,6 +174,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Future signUp() async {
+    addStandardSettings();
     final isValid = formKey.currentState!.validate();
     if (!isValid) return;
     showDialog(

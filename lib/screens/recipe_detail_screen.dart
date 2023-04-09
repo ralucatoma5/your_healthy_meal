@@ -99,7 +99,7 @@ class _RecipeDetailState extends State<RecipeDetail> {
                   ),
                 ),
                 title: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: horizontalBlock * 9),
+                  padding: EdgeInsets.symmetric(horizontal: horizontalBlock * 8),
                   child: Text(
                     textAlign: TextAlign.center,
                     widget.recipe.name,
@@ -113,7 +113,7 @@ class _RecipeDetailState extends State<RecipeDetail> {
             SliverToBoxAdapter(
                 child: SizedBox(
                     width: double.maxFinite,
-                    height: verticalBlock * 150,
+                    height: verticalBlock * 140,
                     child: Stack(
                       children: [
                         Positioned(

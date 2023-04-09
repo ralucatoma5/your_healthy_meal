@@ -160,7 +160,7 @@ class _RecipeDetailState extends State<RecipeDetail> {
                                           shrinkWrap: true,
                                           itemCount: widget.recipe.type.length,
                                           itemBuilder: ((context, index) {
-                                            return widget.recipe.type[index] != 'All'
+                                            return widget.recipe.type[index] != 'Toate'
                                                 ? Padding(
                                                     padding: EdgeInsets.only(bottom: verticalBlock),
                                                     child: Text(widget.recipe.type[index]),
@@ -178,13 +178,13 @@ class _RecipeDetailState extends State<RecipeDetail> {
                                       padding: EdgeInsets.only(top: verticalBlock * 3),
                                       physics: const ScrollPhysics(),
                                       shrinkWrap: true,
-                                      itemCount: widget.recipe.type.length,
+                                      itemCount: widget.recipe.ingredients.length,
                                       itemBuilder: ((context, index) {
                                         return Row(
                                           children: [
                                             Padding(
                                               padding: EdgeInsets.only(bottom: verticalBlock),
-                                              child: Text(widget.recipe.type[index]),
+                                              child: Text(widget.recipe.ingredients[index]),
                                             )
                                           ],
                                         );

@@ -1,16 +1,4 @@
 # hackathon
 
-A new Flutter project.
+Aplicatia ce ofera idei de mese bogate in vitamine, minerale si proteine in functie de nevoile dumneavostra. In profilul aplicatiei puteti adauga ce deficide vitamine aveti, iar in functie de optiunile alese aplicatia va sugera diferite retete.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.

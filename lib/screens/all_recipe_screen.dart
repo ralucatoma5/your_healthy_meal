@@ -20,7 +20,7 @@ class _AllRecipeScreenState extends State<AllRecipeScreen> with SingleTickerProv
   static List<Tab> myTabs = <Tab>[
     const Tab(
       child: Text(
-        'All',
+        'Toate',
       ),
     ),
     const Tab(
@@ -93,7 +93,7 @@ class _AllRecipeScreenState extends State<AllRecipeScreen> with SingleTickerProv
           },
           body: TabBarView(
             children: [
-              RecipeTypeGridView(type: 'All', controller: controller),
+              RecipeTypeGridView(type: 'Toate', controller: controller),
               RecipeTypeGridView(type: 'Vitamina D', controller: controller),
               RecipeTypeGridView(type: 'Vitamina E', controller: controller),
               RecipeTypeGridView(type: 'Vitamina C', controller: controller),

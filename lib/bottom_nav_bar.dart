@@ -34,33 +34,33 @@ class _BottomNavBarState extends State<BottomNavBar> {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.cabin,
-              size: verticalBlock * 2,
+              size: verticalBlock * 3.5,
             ),
             activeIcon: Icon(
               Icons.cabin,
-              size: verticalBlock * 2.5,
+              size: verticalBlock * 4,
             ),
             label: "",
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.favorite_border,
-              size: verticalBlock * 2,
+              size: verticalBlock * 3.5,
             ),
             activeIcon: Icon(
               Icons.favorite_border,
-              size: verticalBlock * 2.5,
+              size: verticalBlock * 4,
             ),
             label: "",
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.access_alarm_outlined,
-              size: verticalBlock * 2,
+              Icons.search,
+              size: verticalBlock * 3.5,
             ),
             activeIcon: Icon(
-              Icons.access_alarm_outlined,
-              size: verticalBlock * 2.5,
+              Icons.search,
+              size: verticalBlock * 4,
             ),
             label: "",
           ),

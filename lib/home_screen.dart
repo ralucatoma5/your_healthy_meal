@@ -22,13 +22,14 @@ class _HomeScreenState extends State<HomeScreen> {
   late bool switchValueE;
   late bool switchValueC;
   late bool switchValueP;
-
+  List<Recipe> finalList = [];
   List<String> vitamins = ['Vitamina D', 'Vitamina E', 'Vitamina C', 'Proteine'];
   bool switchValueKcal = true;
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     SizeConfig().init(context);
+    int nr = 0;
     final horizonalBlock = SizeConfig.safeBlockHorizontal!;
     final verticalBlock = SizeConfig.safeBlockVertical!;
     return StreamBuilder<QuerySnapshot>(
@@ -59,8 +60,6 @@ class _HomeScreenState extends State<HomeScreen> {
               vitaminList.add('Vitamina E');
             if (snapshot.data!.docs[0]['Vitamina E'] == false && vitaminList.contains('Vitamina E') == true)
               vitaminList.remove('Vitamina E');
-
-            print(vitaminList);
 
             return Scaffold(
                 appBar: AppBar(
@@ -106,6 +105,29 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       ),
                     ),
+                    ListTile(
+                        title: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('kcal', style: TextStyle(fontSize: verticalBlock * 2)),
+                        CupertinoSwitch(
+                          value: snapshot.data!.docs[0]['arataKcal'] == true,
+                          onChanged: (value) {
+                            updateSettings('arataKcal', value);
+                            setState(() {
+                              switchValueKcal = value;
+                            });
+                          },
+                        ),
+                      ],
+                    )),
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: verticalBlock * 2, horizontal: horizonalBlock * 4),
+                      child: Text('Alege vitaminele tale deficitare:',
+                          style: TextStyle(fontSize: verticalBlock * 2, fontWeight: FontWeight.w700)),
+                    ),
+                    SizedBox(height: verticalBlock * 2),
                     ListTile(
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -174,22 +196,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                     ),
-                    ListTile(
-                        title: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('kcal', style: TextStyle(fontSize: verticalBlock * 2)),
-                        CupertinoSwitch(
-                          value: snapshot.data!.docs[0]['arataKcal'] == true,
-                          onChanged: (value) {
-                            updateSettings('arataKcal', value);
-                            setState(() {
-                              switchValueKcal = value;
-                            });
-                          },
-                        ),
-                      ],
-                    )),
                   ]),
                 ),
                 body: StreamBuilder<QuerySnapshot>(
@@ -198,6 +204,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       if (!snapshot.hasData) {
                         return const CircularProgressIndicator.adaptive();
                       } else {
+                        finalList = [];
+                        for (int i = 0; i < snapshot.data!.docs.length; i++)
+                          if (vitaminList.contains(snapshot.data!.docs[i]['mainVitamin']))
+                            finalList.add(Recipe.fromJSON((snapshot.data!.docs[i])));
                         return Stack(children: [
                           Positioned(
                               child:
@@ -210,7 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 padding: EdgeInsets.only(left: horizonalBlock * 10),
                                 child: Text(
                                   "Retete pentru tine",
-                                  style: TextStyle(fontSize: verticalBlock * 3.5, color: Colors.white),
+                                  style: TextStyle(fontSize: verticalBlock * 3.7, color: Colors.white),
                                 ),
                               ),
                               Container(
@@ -225,31 +235,45 @@ class _HomeScreenState extends State<HomeScreen> {
                                   controller: mediaQuery.size.width < 450
                                       ? PageController(viewportFraction: 0.65)
                                       : PageController(viewportFraction: 0.4),
-                                  itemCount: 3,
+                                  itemCount: finalList.length,
                                   itemBuilder: (context, index) {
                                     Recipe recipe = Recipe.fromJSON(snapshot.data!.docs[index]);
                                     double scale = selectedIndex == index ? 1.0 : 0.8;
+
                                     return TweenAnimationBuilder(
                                       duration: Duration(milliseconds: 350),
                                       tween: Tween(begin: scale, end: scale),
-                                      child: vitaminList.any((item) => recipe.type.contains(item)) == true
-                                          ? Column(
-                                              children: [
-                                                GestureDetector(
-                                                  onTap: () => Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) => RecipeDetail(recipe: recipe)),
-                                                  ),
-                                                  child: Image.asset(
-                                                    recipe.img,
-                                                    height: verticalBlock * 40,
-                                                  ),
-                                                ),
-                                                Text(recipe.name)
-                                              ],
-                                            )
-                                          : SizedBox(),
+                                      child: Column(
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () => Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      RecipeDetail(recipe: finalList[index])),
+                                            ),
+                                            child: Image.asset(
+                                              finalList[index].img,
+                                              height: verticalBlock * 40,
+                                            ),
+                                          ),
+                                          Text(finalList[index].name,
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: blue,
+                                                fontSize: verticalBlock * 2.3,
+                                                fontWeight: FontWeight.w700,
+                                              )),
+                                          SizedBox(
+                                            height: verticalBlock * 1.5,
+                                          ),
+                                          Text(finalList[index].mainVitamin,
+                                              style: TextStyle(
+                                                color: blue,
+                                                fontSize: verticalBlock * 2.2,
+                                              )),
+                                        ],
+                                      ),
                                       builder: (context, double value, child) {
                                         return Transform.scale(
                                           scale: value,
@@ -263,8 +287,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  ...List.generate(
-                                      3, (index) => Indicator(selectedIndex == index ? true : false)),
+                                  ...List.generate(finalList.length,
+                                      (index) => Indicator(selectedIndex == index ? true : false)),
                                 ],
                               )
                             ],
@@ -273,74 +297,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       }
                     }));
           }
-        }
-        /*body: Stack(children: [
-          Positioned(child: Container(height: verticalBlock * 40, color: blue, width: double.infinity)),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: horizonalBlock * 10),
-                child: Text(
-                  "Retete pentru tine",
-                  style: TextStyle(fontSize: verticalBlock * 3.5, color: Colors.white),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.symmetric(vertical: verticalBlock * 7),
-                height: verticalBlock * 50,
-                child: PageView.builder(
-                  onPageChanged: (index) {
-                    setState(() {
-                      selectedIndex = index;
-                    });
-                  },
-                  controller: mediaQuery.size.width < 450
-                      ? PageController(viewportFraction: 0.65)
-                      : PageController(viewportFraction: 0.4),
-                  itemCount: allrecipes.length,
-                  itemBuilder: (context, index) {
-                    double scale = selectedIndex == index ? 1.0 : 0.8;
-                    return TweenAnimationBuilder(
-                      duration: Duration(milliseconds: 350),
-                      tween: Tween(begin: scale, end: scale),
-                      child: Column(
-                        children: [
-                          GestureDetector(
-                            onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => RecipeDetail(recipe: allrecipes[index])),
-                            ),
-                            child: Image.asset(
-                              allrecipes[index].img,
-                              height: verticalBlock * 40,
-                            ),
-                          ),
-                          Text(allrecipes[index].name)
-                        ],
-                      ),
-                      builder: (context, double value, child) {
-                        return Transform.scale(
-                          scale: value,
-                          child: child,
-                        );
-                      },
-                    );
-                  },
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ...List.generate(
-                      allrecipes.length, (index) => Indicator(selectedIndex == index ? true : false)),
-                ],
-              )
-            ],
-          ),
-        ])*/
-        );
+        });
   }
 }

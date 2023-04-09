@@ -101,6 +101,7 @@ class _RecipeDetailState extends State<RecipeDetail> {
                 title: Padding(
                   padding: EdgeInsets.symmetric(horizontal: horizontalBlock * 9),
                   child: Text(
+                    textAlign: TextAlign.center,
                     widget.recipe.name,
                     style: TextStyle(
                         color: Colors.white, fontSize: verticalBlock * 2.5, fontWeight: FontWeight.w600),

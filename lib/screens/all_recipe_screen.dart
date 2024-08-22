@@ -92,6 +92,7 @@ class _AllRecipeScreenState extends State<AllRecipeScreen> with SingleTickerProv
             ];
           },
           body: TabBarView(
+            controller: _tabController,
             children: [
               RecipeTypeGridView(type: 'Toate', controller: controller),
               RecipeTypeGridView(type: 'Vitamina D', controller: controller),
@@ -99,7 +100,6 @@ class _AllRecipeScreenState extends State<AllRecipeScreen> with SingleTickerProv
               RecipeTypeGridView(type: 'Vitamina C', controller: controller),
               RecipeTypeGridView(type: 'Proteine', controller: controller),
             ],
-            controller: _tabController,
           )),
     );
   }

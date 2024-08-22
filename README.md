@@ -12,8 +12,8 @@ The app is cross-platform and has a responsive & adaptive UI.
 ### UI
 
 <p float="left">
-  <img src="assets/images/app-img1.png" width="250" height="500" />
-  <img src="assets/images/app-img2.png" width="250" height="500"/> 
+  <img src="assets/images/app-img1.png" width="250" height="500" hspace="10"/>
+  <img src="assets/images/app-img2.png" width="250" height="500" hspace="10"/> 
   <img src="assets/images/app-img3.png" width="250" height="500"/>
 </p>
 
